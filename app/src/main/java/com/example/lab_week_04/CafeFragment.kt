@@ -11,9 +11,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 
 class CafeFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,7 +21,19 @@ class CafeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = view.findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        val adapter = CafeAdapter(childFragmentManager, lifecycle)
+
+        val titles = listOf(
+            getString(R.string.starbucks_title),
+            getString(R.string.janjijiwa_title),
+            getString(R.string.kopikenangan_title)
+        )
+        val contents = listOf(
+            getString(R.string.starbucks_desc),
+            getString(R.string.janjijiwa_desc),
+            getString(R.string.kopikenangan_desc)
+        )
+
+        val adapter = CafeAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, contents)
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = resources.getString(TABS_FIXED[position])
